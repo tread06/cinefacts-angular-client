@@ -9,7 +9,10 @@ const apiUrl = 'https://cinefacts-api.herokuapp.com/';
   providedIn: 'root'
 })
 
-export class UserRegistrationService {
+
+//to do: seperate the services
+
+export class UserService {
 
   constructor(private http: HttpClient) {}
 
@@ -17,6 +20,10 @@ export class UserRegistrationService {
 
   // register user
   public userRegistration(userDetails: any): Observable<any> {
+
+    console.log("Attempt to register user:");
+    console.log(userDetails);
+
     return this.http.post(apiUrl + 'users', userDetails)
     .pipe(
       catchError(this.handleError)
@@ -25,7 +32,10 @@ export class UserRegistrationService {
 
   // login user
   public userLogin(username: string, password: string): Observable<any> {
-    return this.http.post(apiUrl + 'login/' + username + "/" + password, null)
+
+    console.log("Attempt to log in user:" + username);
+
+    return this.http.post(apiUrl + 'login', {Username: username, Password: password})
     .pipe(
       map(this.extractResponseData),
       catchError(this.handleError)
@@ -85,7 +95,6 @@ export class UserRegistrationService {
   }
 
   // User Favorites Endpoints
-
   // add favorite
   public addFavorite(username: string, movieId: string): Observable<any> {
     const token = localStorage.getItem('token');
@@ -112,8 +121,35 @@ export class UserRegistrationService {
     );
   }
 
-  // Move Endpoints
+  //Helper fuctions
+  // Non-typed response extraction
+  private extractResponseData(res: any): any {
+    //Responce is not recognized as a type. I changed it to any.
+    const body = res;
+    return body || { };
+  }
 
+  private handleError(error: HttpErrorResponse): any {
+    //log the error in the console
+    if (error.error instanceof ErrorEvent) {
+      console.error('Some error occurred:', error.error.message);
+    } else {
+      console.error(
+        `Error Status code ${error.status}, ` +
+        `Error body is: ${error.error}`);
+    }
+    //return the error message
+    return throwError( () =>{
+      console.log("An error occured: "+error.error.message);
+    });
+  }
+}
+
+export class MovieService {
+
+  constructor(private http: HttpClient) {}
+
+  // Movie Endpoints
   // get all movies
   public getAllMovies(): Observable<any> {
     const token = localStorage.getItem('token');
@@ -140,19 +176,7 @@ export class UserRegistrationService {
     );
   }
 
-  // Documentation Endpoint
-
-  // get documantation
-  public getDocumentation(): Observable<any> {
-    return this.http.get(apiUrl + 'ducumentation/')
-      .pipe(
-        map(this.extractResponseData),
-        catchError(this.handleError)
-    );
-  }
-
   //Helper fuctions
-
   // Non-typed response extraction
   private extractResponseData(res: any): any {
     //Responce is not recognized as a type. I changed it to any.
@@ -175,3 +199,45 @@ export class UserRegistrationService {
     });
   }
 }
+
+export class DocumentationService {
+
+  constructor(private http: HttpClient) {}
+
+  // Documentation Endpoint
+
+  // get documantation
+  public getDocumentation(): Observable<any> {
+    return this.http.get(apiUrl + 'ducumentation/')
+      .pipe(
+        map(this.extractResponseData),
+        catchError(this.handleError)
+    );
+  }
+
+  //Helper fuctions
+  // Non-typed response extraction
+  private extractResponseData(res: any): any {
+    //Responce is not recognized as a type. I changed it to any.
+    const body = res;
+    return body || { };
+  }
+
+  private handleError(error: HttpErrorResponse): any {
+    //log the error in the console
+    if (error.error instanceof ErrorEvent) {
+      console.error('Some error occurred:', error.error.message);
+    } else {
+      console.error(
+        `Error Status code ${error.status}, ` +
+        `Error body is: ${error.error}`);
+    }
+    //return the error message
+    return throwError( () =>{
+      console.log("An error occured: "+error.error.message);
+    });
+  }
+}
+
+
+
