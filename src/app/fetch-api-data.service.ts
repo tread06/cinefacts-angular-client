@@ -8,22 +8,14 @@ const apiUrl = 'https://cinefacts-api.herokuapp.com/';
 @Injectable({
   providedIn: 'root'
 })
-
-
-//to do: seperate the services
-
 export class UserService {
 
   constructor(private http: HttpClient) {}
-
   // User Endpoints
-
   // register user
   public userRegistration(userDetails: any): Observable<any> {
-
     console.log("Attempt to register user:");
     console.log(userDetails);
-
     return this.http.post(apiUrl + 'users', userDetails)
     .pipe(
       catchError(this.handleError)
@@ -32,9 +24,7 @@ export class UserService {
 
   // login user
   public userLogin(username: string, password: string): Observable<any> {
-
     console.log("Attempt to log in user:" + username);
-
     return this.http.post(apiUrl + 'login', {Username: username, Password: password})
     .pipe(
       map(this.extractResponseData),
@@ -145,6 +135,9 @@ export class UserService {
   }
 }
 
+@Injectable({
+  providedIn: 'root'
+})
 export class MovieService {
 
   constructor(private http: HttpClient) {}
@@ -152,6 +145,8 @@ export class MovieService {
   // Movie Endpoints
   // get all movies
   public getAllMovies(): Observable<any> {
+
+    console.log("Getting all movies");
     const token = localStorage.getItem('token');
     return this.http.get(apiUrl + 'movies', {
       headers: new HttpHeaders({
@@ -200,6 +195,9 @@ export class MovieService {
   }
 }
 
+@Injectable({
+  providedIn: 'root'
+})
 export class DocumentationService {
 
   constructor(private http: HttpClient) {}
