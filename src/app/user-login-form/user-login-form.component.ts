@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { UserService } from '../fetch-api-data.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-login-form',
@@ -13,7 +14,8 @@ export class UserLoginFormComponent implements OnInit {
   constructor(
     public userService: UserService,
     public dialogRef: MatDialogRef<UserLoginFormComponent>,
-    public snackBar: MatSnackBar) { }
+    public snackBar: MatSnackBar,
+    public router: Router ){ }
 
   @Input() userData = { Username: '', Password: ''};
 
@@ -26,8 +28,8 @@ export class UserLoginFormComponent implements OnInit {
     //store token on local storge
     localStorage.setItem('token', result.token);
     const message = "Login success. Welcome, " + result.user.Username;
-
     this.dialogRef.close(); // This will close the modal on success!
+    this.router.navigate(['movies']); //navigate to movies
     this.snackBar.open(message, 'OK', {
       duration: 4000
       });

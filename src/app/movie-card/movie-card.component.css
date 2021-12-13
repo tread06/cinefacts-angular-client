@@ -1,0 +1,19 @@
+.movie-card {
+  margin: 10px;
+  flex: 1 1 auto;
+}
+.movie-card-header {
+  width: 200px;
+}
+.movie-card-image {
+  margin: auto;
+  height: 100%;
+}
+.movie-card-image-container {
+  height: 300px;
+  display: flex;
+}
+.movie-card-container {
+  height: 550px;
+  display: flex;
+}
