@@ -23,20 +23,36 @@ export class UserLoginFormComponent implements OnInit {
   }
 
   loginUser(): void {
-    this.userService.userLogin(this.userData.Username, this.userData.Password).subscribe((result) => {
+    //define login success
+    const onLoginSuccess = (result:any) => {
 
-    //store token on local storge
-    localStorage.setItem('token', result.token);
-    const message = "Login success. Welcome, " + result.user.Username;
-    this.dialogRef.close(); // This will close the modal on success!
-    this.router.navigate(['movies']); //navigate to movies
-    this.snackBar.open(message, 'OK', {
-      duration: 4000
+      /////store token on local storge -- all of this should be done in the service
+      localStorage.setItem('token', result.token);
+      localStorage.setItem('user', result.user.Username);
+      this.userService.updateLocalUser(result.user.Username);
+      /////
+
+      const successMessage = "Login success. Welcome, " + result.user.Username;
+      //close the modal
+      this.dialogRef.close();
+      //navigate to movies view
+      this.router.navigate(['movies']);
+
+      this.snackBar.open(successMessage, 'OK', {
+        duration: 4000
+        });
+    }
+    //define login fail
+    const onLoginFailed = (results:any) => {
+      this.snackBar.open("An error occured.", 'OK', {
+        duration: 4000
       });
-    }, (result) => {
-    this.snackBar.open(result, 'OK', {
-      duration: 4000
-      });
+    };
+
+    //call subscribe
+    this.userService.userLogin(this.userData.Username, this.userData.Password).subscribe({
+      next: (result:any) => onLoginSuccess(result),
+      error: (result:any) => onLoginFailed(result)
     });
   }
 }

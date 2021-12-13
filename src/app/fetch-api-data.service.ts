@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-//import { catchError } from 'rxjs/internal/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Observable, throwError, catchError} from 'rxjs';
+import { Observable, throwError, catchError, BehaviorSubject} from 'rxjs';
 import { map } from 'rxjs/operators';
 
 const apiUrl = 'https://cinefacts-api.herokuapp.com/';
@@ -11,20 +10,31 @@ const apiUrl = 'https://cinefacts-api.herokuapp.com/';
 export class UserService {
 
   constructor(private http: HttpClient) {}
+
+  //user state
+  //the true state - updated by this class
+  private userSubject = new BehaviorSubject<string>("");
+  public userObservable$ : Observable<string> = this.userSubject.asObservable();
+  public updateLocalUser(username: string): void{
+    this.userSubject.next(username);
+  }
+
   // User Endpoints
   // register user
   public userRegistration(userDetails: any): Observable<any> {
-    console.log("Attempt to register user:");
-    console.log(userDetails);
     return this.http.post(apiUrl + 'users', userDetails)
     .pipe(
       catchError(this.handleError)
     );
   }
 
+  //to do:
+
   // login user
   public userLogin(username: string, password: string): Observable<any> {
-    console.log("Attempt to log in user:" + username);
+
+    //to do return the result AFTER assigning the new user
+
     return this.http.post(apiUrl + 'login', {Username: username, Password: password})
     .pipe(
       map(this.extractResponseData),
