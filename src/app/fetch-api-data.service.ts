@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable, throwError, catchError, BehaviorSubject} from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 const apiUrl = 'https://cinefacts-api.herokuapp.com/';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,15 +12,78 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  //user state
-  //the true state - updated by this class
-  private userSubject = new BehaviorSubject<string>("");
-  public userObservable$ : Observable<string> = this.userSubject.asObservable();
-  public updateLocalUser(username: string): void{
-    this.userSubject.next(username);
+  //the true user state - updated by this class
+  private userSubject = new BehaviorSubject<any>(null);
+  public userObservable$ : Observable<any> = this.userSubject.asObservable();
+
+  //update local user and storage if the login is successful
+  private handleLogin = (result:any):any => {
+    localStorage.setItem('token', result.token);
+    localStorage.setItem('user', result.user.Username);
+    this.userSubject.next({
+      _id: result.user._id,
+      Email: result.user.Email,
+      Username: result.user.Username,
+      Birthday: result.user.Birthday,
+      FavoriteMovies: result.user.FavoriteMovies
+    });
+  }
+  private handleUserUpdated = (result:any):any => {
+    this.userSubject.next({
+      _id: result._id,
+      Email: result.Email,
+      Username: result.Username,
+      Birthday: result.Birthday,
+      FavoriteMovies: result.FavoriteMovies
+    });
   }
 
-  // User Endpoints
+  private handleLoginError = (error: HttpErrorResponse):any => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.userSubject.next(null);
+    return throwError( () =>{
+      console.log("An error occured: " + error.error.message);
+    });
+  }
+
+  //check local storage for a user name and key - if found, get user data
+  public checkLocalStoarge = ():void => {
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
+    if(token && user){
+      this.getUser(user).subscribe({
+        next: (result: any) => this.onUserFound(result),
+        error: (err: Error) => this.onUserFail(),
+      });
+    }
+    else{
+      this.userSubject.next(null);
+    }
+  }
+  //on user found
+  private onUserFound = (result: any):void => {
+    this.userSubject.next({
+      _id: result._id,
+      Email: result.Email,
+      Username: result.Username,
+      Birthday: result.Birthday,
+      FavoriteMovies: result.FavoriteMovies
+    });
+  }
+  //on user not found
+  private onUserFail = ():void => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.userSubject.next(null)
+  }
+
+  public logout = ():void => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.userSubject.next(null);
+  }
+
   // register user
   public userRegistration(userDetails: any): Observable<any> {
     return this.http.post(apiUrl + 'users', userDetails)
@@ -28,18 +92,14 @@ export class UserService {
     );
   }
 
-  //to do:
-
   // login user
   public userLogin(username: string, password: string): Observable<any> {
-
-    //to do return the result AFTER assigning the new user
-
     return this.http.post(apiUrl + 'login', {Username: username, Password: password})
     .pipe(
       map(this.extractResponseData),
-      catchError(this.handleError)
-    );
+      tap(this.handleLogin),
+      catchError(this.handleLoginError)
+    )
   }
 
   // get users
@@ -70,6 +130,10 @@ export class UserService {
 
   // update user
   public updateUser(username: string, userDetails: any): Observable<any> {
+
+
+    console.log(userDetails.Birthday);
+
     const token = localStorage.getItem('token');
     return this.http.put(apiUrl + 'users/' + username, userDetails, {
       headers: new HttpHeaders({
@@ -77,6 +141,7 @@ export class UserService {
       })})
       .pipe(
         map(this.extractResponseData),
+        tap(this.handleUserUpdated),
         catchError(this.handleError)
     );
   }
@@ -156,7 +221,6 @@ export class MovieService {
   // get all movies
   public getAllMovies(): Observable<any> {
 
-    console.log("Getting all movies");
     const token = localStorage.getItem('token');
     return this.http.get(apiUrl + 'movies', {
       headers: new HttpHeaders({

@@ -1,0 +1,25 @@
+.profile-view-container{
+  display: flex;
+  flex-wrap: wrap;
+}
+.profile-container{
+  flex: 1;
+  margin: 15px;
+  min-width: 400px;
+}
+.movies-container{
+  min-width: 400px;
+  height: 100vh;
+  flex: 3;
+  overflow: auto;
+}
+.movies-notice{
+  margin: 40px;
+  text-align: center;
+}
+.username{
+  margin: 20px;
+}
+.user-info{
+  margin: 20px;
+}

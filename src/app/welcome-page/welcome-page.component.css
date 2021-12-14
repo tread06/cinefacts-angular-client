@@ -1,0 +1,13 @@
+.main-page{
+  display: block;
+  margin: auto;
+  margin-top: 20vh;
+  width: 300px;
+}
+.title{
+  text-align: center;
+}
+.buttons-container{
+  display: flex;
+  justify-content: center;
+}

@@ -12,16 +12,18 @@ import { Router } from '@angular/router';
 })
 export class WelcomePageComponent implements OnInit {
   constructor(public dialog: MatDialog, public router: Router, private userService:UserService) { }
-  ngOnInit(): void {
 
-    //check if the user is already logged in
-    const token = localStorage.getItem('token');
-    const user = localStorage.getItem('user');
-
-    if(token && user){
-      this.userService.updateLocalUser(user);
-      this.router.navigate(['movies']); //navigate to movies
+  navigateToMovies = (user:any) =>{
+    if(user!==null){
+      this.router.navigate(['movies']);
     }
+  }
+  userObserver = {
+    next: (result:any) => this.navigateToMovies(result)
+  };
+
+  ngOnInit(): void {
+    this.userService.userObservable$.subscribe(this.userObserver);
   }
   openUserRegistrationDialog(): void {
     this.dialog.open(UserRegistrationFormComponent, {

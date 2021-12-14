@@ -25,30 +25,18 @@ export class UserLoginFormComponent implements OnInit {
   loginUser(): void {
     //define login success
     const onLoginSuccess = (result:any) => {
-
-      /////store token on local storge -- all of this should be done in the service
-      localStorage.setItem('token', result.token);
-      localStorage.setItem('user', result.user.Username);
-      this.userService.updateLocalUser(result.user.Username);
-      /////
-
       const successMessage = "Login success. Welcome, " + result.user.Username;
-      //close the modal
       this.dialogRef.close();
-      //navigate to movies view
-      this.router.navigate(['movies']);
-
       this.snackBar.open(successMessage, 'OK', {
         duration: 4000
         });
     }
     //define login fail
     const onLoginFailed = (results:any) => {
-      this.snackBar.open("An error occured.", 'OK', {
+      this.snackBar.open("Username or password is incorrect.", 'OK', {
         duration: 4000
       });
     };
-
     //call subscribe
     this.userService.userLogin(this.userData.Username, this.userData.Password).subscribe({
       next: (result:any) => onLoginSuccess(result),

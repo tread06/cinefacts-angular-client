@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MovieService } from '../fetch-api-data.service';
 
 @Component({
@@ -8,6 +8,8 @@ import { MovieService } from '../fetch-api-data.service';
 })
 export class MovieCardComponent {
 
+  @Input() userFilter!: any[];
+
   movies: any[] = [];
   constructor(public movieService: MovieService) { }
 
@@ -16,11 +18,13 @@ ngOnInit(): void {
 }
 
 getMovies(): void {
-  console.log("Try get movies");
   this.movieService.getAllMovies().subscribe((resp: any) => {
       this.movies = resp;
-      console.log(this.movies);
-      return this.movies;
+      if(this.userFilter){
+        this.movies = this.movies.filter((movie)=>{
+          this.userFilter.includes(movie._id);
+        });
+      }
     });
   }
 }

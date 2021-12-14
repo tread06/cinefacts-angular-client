@@ -1,5 +1,7 @@
 <mat-toolbar>
-  <span>cineFacts</span>
+  <a *ngIf="user != null" routerLink="/welcome">Welcome to CineFacts, {{user.Username}}</a>
+  <a *ngIf="user == null" routerLink="/welcome">CineFacts</a>
   <span class="spacer"></span>
-  <span>{{user}}</span>
+  <a class="nav-item" *ngIf="user !=null" routerLink="/profile">Profile</a>
+  <a class="nav-item" *ngIf="user != null" role="button" (click)="logout()">Logout</a>
 </mat-toolbar>

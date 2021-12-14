@@ -13,28 +13,34 @@ export class UserRegistrationFormComponent implements OnInit {
   @Input() userData = { Username: '', Password: '', Email: '', Birthday: '' };
 
   constructor(
-    public userRegistractionService: UserService,
+    public userService: UserService,
     public dialogRef: MatDialogRef<UserRegistrationFormComponent>,
     public snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
+    
   }
-  // This is the function responsible for sending the form inputs to the backend
 
   //to do use non-depricated subscribe
   registerUser(): void {
-    this.userRegistractionService.userRegistration(this.userData).subscribe((result) => {
 
-    const message = "Registration success. Welcome, " + result.Username;
-
-    this.dialogRef.close(); // This will close the modal on success!
-    this.snackBar.open(message, 'OK', {
+    //define login success
+  const onRegisterSuccess = (result:any) => {
+    this.dialogRef.close();
+    this.snackBar.open("Registration success. Welcome, " + result.Username, 'OK', {
       duration: 4000
       });
-    }, (result) => {
-    this.snackBar.open(result, 'OK', {
+  }
+  //define login fail
+  const onRegisterFailed = (results:any) => {
+    this.snackBar.open("An error occured.", 'OK', {
       duration: 4000
-      });
     });
+  };
+
+  this.userService.userRegistration(this.userData).subscribe({
+    next: (result:any) => onRegisterSuccess(result),
+    error: (result:any) => onRegisterFailed(result)
+  });
   }
 }

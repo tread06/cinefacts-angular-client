@@ -22,6 +22,11 @@ import { UserLoginFormComponent } from './user-login-form/user-login-form.compon
 import { MovieCardComponent } from './movie-card/movie-card.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
+import { ProfileViewComponent } from './profile-view/profile-view.component';
+import { UserUpdateFormComponent } from './user-update-form/user-update-form.component';
+import { GenreViewComponent } from './genre-view/genre-view.component';
+import { DirectorViewComponent } from './director-view/director-view.component';
+import { SynopsisViewComponent } from './synopsis-view/synopsis-view.component';
 
 
 
@@ -29,6 +34,7 @@ import { NavigationBarComponent } from './navigation-bar/navigation-bar.componen
 const appRoutes: Routes = [
   { path: 'welcome', component: WelcomePageComponent },
   { path: 'movies', component: MovieCardComponent },
+  { path: 'profile', component: ProfileViewComponent },
   { path: '', redirectTo: 'welcome', pathMatch: 'prefix' },
 ];
 
@@ -39,7 +45,12 @@ const appRoutes: Routes = [
     UserLoginFormComponent,
     MovieCardComponent,
     WelcomePageComponent,
-    NavigationBarComponent
+    NavigationBarComponent,
+    ProfileViewComponent,
+    UserUpdateFormComponent,
+    GenreViewComponent,
+    DirectorViewComponent,
+    SynopsisViewComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

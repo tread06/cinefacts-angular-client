@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { UserService } from './fetch-api-data.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'myFlix-Angular-client';
+
+  constructor(private userService:UserService){}
+
+  ngOnInit(): void {
+    this.userService.checkLocalStoarge();
+    console.log("Hello there.");
+  }
 }

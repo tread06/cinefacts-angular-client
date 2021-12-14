@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit} from '@angular/core';
 import { UserService } from '../fetch-api-data.service';
 
@@ -8,17 +9,20 @@ import { UserService } from '../fetch-api-data.service';
 })
 export class NavigationBarComponent implements OnInit {
 
-  constructor(private userService : UserService) { }
+  constructor(private userService : UserService, private router : Router) { }
 
-  user = "username";
+  user: any= null;
 
   ngOnInit(): void {
-
     const userObserver = {
-      next: (username: string) => this.user = username,
-      error: (err: Error) => console.error('Observer got an error: ' + err),
-      complete: () => console.log('Observer got a complete notification'),
+      next: (user: any) => this.user = user,
+      error: (err: Error) => this.user = null,
     };
     this.userService.userObservable$.subscribe(userObserver);
+  }
+
+  logout = () =>{
+    this.userService.logout();
+    this.router.navigate(['welcome']);
   }
 }

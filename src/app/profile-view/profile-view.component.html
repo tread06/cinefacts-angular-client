@@ -1,0 +1,18 @@
+<div class="profile-view-container">
+  <div class="profile-container">
+    <mat-card>
+      <mat-card-title class="username" *ngIf="user!=null">{{user.Username}}</mat-card-title>
+      <mat-card-subtitle class="user-info" *ngIf="user!=null">Email: {{user.Email}}</mat-card-subtitle>
+      <mat-card-subtitle class="user-info" *ngIf="user!=null">Birthday: {{user.Birthday | date:'shortDate'}}</mat-card-subtitle>
+      <button
+      mat-raised-button
+      color="primary"
+      (click)="openUserUpdateDialog()"
+      >Update</button>
+    </mat-card>
+  </div>
+  <div class="movies-container">
+    <h3 class="movies-notice" *ngIf="user!=null && user.FavoriteMovies.length == 0">No favorites have been added.</h3>
+    <app-movie-card *ngIf="user!=null" [userFilter]="user.FavoriteMovies"></app-movie-card>
+  </div>
+</div>
