@@ -52,7 +52,7 @@ export class UserRegistrationFormComponent implements OnInit {
   const stringDate = newdate.toISOString();
 
   this.userService.userRegistration({
-    UserName: this.userData.Username,
+    Username: this.userData.Username,
     Password: this.userData.Password,
     Email: this.userData.Email,
     Birthday: stringDate

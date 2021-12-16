@@ -1,4 +1,4 @@
-<mat-toolbar>
+<mat-toolbar class="navigation-bar">
   <mat-icon class="nav-icon"> home </mat-icon>
   <a *ngIf="user != null" routerLink="/welcome">Welcome to CineFacts, {{user.Username}}</a>
   <a *ngIf="user == null" routerLink="/welcome">CineFacts</a>
