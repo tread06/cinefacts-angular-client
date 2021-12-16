@@ -1,8 +1,14 @@
+.fixed{
+  position: fixed
+}
 .spacer {
   flex: 1 1 auto;
 }
 .nav-item {
   margin-right: 20px;
+}
+.nav-icon {
+  margin-right: 5px;
 }
 a:link{
   text-decoration: none;

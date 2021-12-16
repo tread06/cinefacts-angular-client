@@ -160,10 +160,6 @@ export class UserService {
 
     const token = localStorage.getItem('token');
 
-    console.log(username); //correct
-    console.log(movieId); //correct
-    console.log(token); //correct
-
     return this.http.post(apiUrl + 'users/' + username +'/movies/' + movieId, null, {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + token,

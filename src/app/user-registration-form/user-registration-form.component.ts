@@ -18,7 +18,7 @@ export class UserRegistrationFormComponent implements OnInit {
     public snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    
+
   }
 
   //to do use non-depricated subscribe
@@ -38,7 +38,25 @@ export class UserRegistrationFormComponent implements OnInit {
     });
   };
 
-  this.userService.userRegistration(this.userData).subscribe({
+  //convert date to YYYY-MM-DD
+  const date = new Date(this.userData.Birthday);
+  const newdate = new Date(
+    date.getUTCFullYear(),
+    date.getUTCMonth(),
+    date.getUTCDate(),
+    date.getUTCHours(),
+    date.getUTCMinutes(),
+    date.getUTCSeconds(),
+    date.getUTCMilliseconds());
+
+  const stringDate = newdate.toISOString();
+
+  this.userService.userRegistration({
+    UserName: this.userData.Username,
+    Password: this.userData.Password,
+    Email: this.userData.Email,
+    Birthday: stringDate
+  }).subscribe({
     next: (result:any) => onRegisterSuccess(result),
     error: (result:any) => onRegisterFailed(result)
   });

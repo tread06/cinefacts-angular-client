@@ -1,11 +1,11 @@
 .movie-card-container {
-  height: 550px;
   display: flex;
   flex-wrap: wrap;
 }
 .movie-card {
   margin: 15px;
   flex: 1;
+  max-width: 350px;
 }
 .movie-card-header {
   width: 250px;

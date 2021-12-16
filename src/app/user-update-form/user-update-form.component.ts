@@ -32,6 +32,7 @@ export class UserUpdateFormComponent implements OnInit {
   }
 
   updateUser(): void {
+
     //define login success
     const onUpdateSuccess = (result:any) => {
       this.dialogRef.close();
@@ -46,11 +47,24 @@ export class UserUpdateFormComponent implements OnInit {
     });
   };
 
+  //convert date to YYYY-MM-DD
+  const date = new Date(this.userData.Birthday);
+  const newdate = new Date(
+    date.getUTCFullYear(),
+    date.getUTCMonth(),
+    date.getUTCDate(),
+    date.getUTCHours(),
+    date.getUTCMinutes(),
+    date.getUTCSeconds(),
+    date.getUTCMilliseconds());
+
+  const stringDate = newdate.toISOString();
+
   this.userService.updateUser(this.user.Username,{
     Username: this.user.Username,
     Password: this.userData.Password,
     Email: this.userData.Email,
-    Birthday: this.userData.Birthday
+    Birthday: stringDate
   }).subscribe({
     next: (result:any) => onUpdateSuccess(result),
     error: (result:any) => onUpdateFailed(result)

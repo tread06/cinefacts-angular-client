@@ -32,7 +32,7 @@
           >
               Synopsis
           </button>
-          <mat-icon (click)="toggleFavorite(movie._id)" >favorite_border</mat-icon>
+          <mat-icon  color="primary" (click)="toggleFavorite(movie._id)" >{{getIcon(movie._id)}}</mat-icon>
       </mat-card-actions>
   </mat-card>
 </div>

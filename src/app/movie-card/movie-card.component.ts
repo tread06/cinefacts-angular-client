@@ -7,6 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { MovieService } from '../fetch-api-data.service';
 
 import { MatDialog } from '@angular/material/dialog';
+import { FlexibleConnectedPositionStrategy } from '@angular/cdk/overlay';
 
 
 @Component({
@@ -26,22 +27,29 @@ export class MovieCardComponent {
 
   ngOnInit(): void {
     const userObserver = {
-      next: (user: any) => this.user = user,
+      next: (user: any) => this.onUserUpdated(user),
       error: (err: Error) => this.user = null,
     };
     this.userService.userObservable$.subscribe(userObserver);
     this.getMovies();
   }
 
+  onUserUpdated(user:any){
+    this.user = user;
+    if(this.user)
+      this.getMovies();
+  }
+
   getMovies(): void {
     this.movieService.getAllMovies().subscribe((responce: any) => {
       this.movies = responce;
+
+      //filter movies if a user filter is found
       if(this.userFilter){
         this.movies = this.movies.filter((movie)=>{
-          this.userFilter.includes(movie._id);
+          return this.userFilter.includes(movie._id);
         });
       }
-      console.log(this.movies);
     });
   }
 
@@ -54,6 +62,7 @@ export class MovieCardComponent {
       }
     });
   }
+
   openDirectorDialog(name: string, birth: string, death: string, bio: string): void {
     this.dialog.open(DirectorViewComponent, {
       width: '280px',
@@ -65,6 +74,7 @@ export class MovieCardComponent {
       }
     });
   }
+
   openSynopsisDialog(title: string, description:string): void {
     this.dialog.open(SynopsisViewComponent, {
       width: '280px',
@@ -75,23 +85,22 @@ export class MovieCardComponent {
       }
     });
   }
+
   toggleFavorite(movieId: string): void {
 
-    console.log(this.user);
-    let isFavorite:boolean = this.user.FavoriteMovies.includes(movieId);
-
-    const favorites = {
-      next: (user: any) => console.log(user),
-      error: (err: Error) => console.log(err),
-    };
-
-    if(isFavorite){
-      console.log("Trying to remove favorite");
-      this.userService.removeFavorite(this.user.Username, movieId).subscribe(favorites);
+    if(this.user.FavoriteMovies.includes(movieId)){
+      this.userService.removeFavorite(this.user.Username, movieId).subscribe();
     }
     else{
-      console.log("Trying to add favorite");
-      this.userService.addFavorite(this.user.Username, movieId).subscribe(favorites);
+      this.userService.addFavorite(this.user.Username, movieId).subscribe();
     }
+  }
+
+  getIcon = (movieId: string):string=>{
+    if(this.user.FavoriteMovies.includes(movieId)){
+      return "favorite"
+    }
+    else
+      return 'favorite_border'
   }
 }
