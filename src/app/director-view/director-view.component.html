@@ -1,1 +1,17 @@
-<p>director-view works!</p>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{data.name}}</mat-card-title>
+    <mat-card-subtitle *ngIf="data.death">{{data.birth}} - {{data.death}}</mat-card-subtitle>
+    <mat-card-subtitle *ngIf="!data.death">{{data.birth}} - present</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>{{data.bio}}</mat-card-content>
+  <mat-card-actions>
+      <button
+        mat-raised-button
+        (click)="closeDialog()"
+        color="primary"
+      >
+        Close
+      </button>
+  </mat-card-actions>
+</mat-card>

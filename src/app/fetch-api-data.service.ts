@@ -130,10 +130,6 @@ export class UserService {
 
   // update user
   public updateUser(username: string, userDetails: any): Observable<any> {
-
-
-    console.log(userDetails.Birthday);
-
     const token = localStorage.getItem('token');
     return this.http.put(apiUrl + 'users/' + username, userDetails, {
       headers: new HttpHeaders({
@@ -159,16 +155,22 @@ export class UserService {
     );
   }
 
-  // User Favorites Endpoints
   // add favorite
   public addFavorite(username: string, movieId: string): Observable<any> {
+
     const token = localStorage.getItem('token');
-    return this.http.post(apiUrl + 'users/' + username +'/movies/'+movieId, {
+
+    console.log(username); //correct
+    console.log(movieId); //correct
+    console.log(token); //correct
+
+    return this.http.post(apiUrl + 'users/' + username +'/movies/' + movieId, null, {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + token,
       })})
       .pipe(
         map(this.extractResponseData),
+        tap(this.handleUserUpdated),
         catchError(this.handleError)
     );
   }
@@ -182,6 +184,7 @@ export class UserService {
       })})
       .pipe(
         map(this.extractResponseData),
+        tap(this.handleUserUpdated),
         catchError(this.handleError)
     );
   }
@@ -205,7 +208,7 @@ export class UserService {
     }
     //return the error message
     return throwError( () =>{
-      console.log("An error occured: "+error.error.message);
+      console.log("An error occured: "+error.message);
     });
   }
 }

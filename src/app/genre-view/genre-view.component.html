@@ -1,1 +1,15 @@
-<p>genre-view works!</p>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{data.name}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>{{data.info}}</mat-card-content>
+  <mat-card-actions>
+      <button
+        mat-raised-button
+        (click)="closeDialog()"
+        color="primary"
+      >
+        Close
+      </button>
+  </mat-card-actions>
+</mat-card>

@@ -17,6 +17,8 @@ export class ProfileViewComponent implements OnInit {
 
     const userUpdated = (user:any):void =>{
       this.user=user;
+      console.log("User favorites:");
+      console.log(this.user.FavoriteMovies);
     }
     const userObserver = {
       next: (user: any) => userUpdated(user),

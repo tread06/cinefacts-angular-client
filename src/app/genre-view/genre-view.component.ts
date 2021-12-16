@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Inject } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-genre-view',
@@ -7,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GenreViewComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public dialogRef: MatDialogRef<GenreViewComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
+    console.log(this.data);
+  }
+
+  closeDialog(){
+    this.dialogRef.close();
   }
 
 }
