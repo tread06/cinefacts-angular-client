@@ -4,9 +4,9 @@
   <a *ngIf="user == null" routerLink="/welcome">CineFacts</a>
   <span class="spacer"></span>
 
-  <mat-icon class="nav-icon" *ngIf="user !=null" routerLink="/profile"> person_pin</mat-icon>
+  <mat-icon class="nav-icon" *ngIf="user !=null"> person_pin</mat-icon>
   <a class="nav-item" *ngIf="user !=null" routerLink="/profile">Profile</a>
 
-  <mat-icon class="nav-icon" *ngIf="user !=null" routerLink="/profile"> exit_to_app</mat-icon>
+  <mat-icon class="nav-icon" *ngIf="user !=null"> exit_to_app</mat-icon>
   <a class="nav-item" *ngIf="user != null" role="button" (click)="logout()">Logout</a>
 </mat-toolbar>
