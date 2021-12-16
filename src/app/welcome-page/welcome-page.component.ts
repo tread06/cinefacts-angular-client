@@ -15,7 +15,6 @@ export class WelcomePageComponent implements OnInit {
 
   navigateToMovies = (user:any) =>{
     if(user!==null && this.router.url === '/welcome'){
-      console.log("Welcome view navigate");
       this.router.navigate(['movies']);
     }
   }
