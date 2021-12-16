@@ -14,7 +14,8 @@ export class WelcomePageComponent implements OnInit {
   constructor(public dialog: MatDialog, public router: Router, private userService:UserService) { }
 
   navigateToMovies = (user:any) =>{
-    if(user!==null){
+    if(user!==null && this.router.url === '/welcome'){
+      console.log("Welcome view navigate");
       this.router.navigate(['movies']);
     }
   }

@@ -28,6 +28,7 @@ export class UserService {
       FavoriteMovies: result.user.FavoriteMovies
     });
   }
+  
   private handleUserUpdated = (result:any):any => {
     this.userSubject.next({
       _id: result._id,
