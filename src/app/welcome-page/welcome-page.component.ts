@@ -11,25 +11,42 @@ import { Router } from '@angular/router';
   styleUrls: ['./welcome-page.component.css']
 })
 export class WelcomePageComponent implements OnInit {
+
   constructor(public dialog: MatDialog, public router: Router, private userService:UserService) { }
 
-  navigateToMovies = (user:any) =>{
+  /**
+  * Called by a user observer.
+  * Checks if there is a local user and navigates to the movies view if there is.
+  * Only navigates if the router url equals /welcome.
+  */
+  tryAutoNavigateToMovies = (user:any) =>{
     if(user!==null && this.router.url === '/welcome'){
       this.router.navigate(['movies']);
     }
   }
-  userObserver = {
-    next: (result:any) => this.navigateToMovies(result)
-  };
 
+  /**
+  * Called on component initialization.
+  * Supscribes to the user observabe.
+  */
   ngOnInit(): void {
-    this.userService.userObservable$.subscribe(this.userObserver);
+    this.userService.userObservable$.subscribe({
+      next: (result:any) => this.tryAutoNavigateToMovies(result)
+    });
   }
+
+  /**
+  * Opens the user registration dialog.
+  */
   openUserRegistrationDialog(): void {
     this.dialog.open(UserRegistrationFormComponent, {
       width: '280px'
     });
   }
+
+  /**
+  * Opens the user login dialog.
+  */
   openUserLoginDialog(): void {
     this.dialog.open(UserLoginFormComponent, {
       width: '280px'

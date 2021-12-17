@@ -22,6 +22,10 @@ export class UserLoginFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+  * Called when the login button is clicked.
+  * Calls userLogin on the user service with form params.
+  */
   loginUser(): void {
     //define login success
     const onLoginSuccess = (result:any) => {

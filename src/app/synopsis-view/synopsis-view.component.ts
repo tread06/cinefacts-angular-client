@@ -17,6 +17,10 @@ export class SynopsisViewComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+  * Called when the close button is clicked.
+  * Closes the dialog.
+  */
   closeDialog(){
     this.dialogRef.close();
   }

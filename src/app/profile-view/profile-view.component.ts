@@ -13,6 +13,10 @@ export class ProfileViewComponent implements OnInit {
   user:any = null;
   constructor(private userService: UserService, private dialog: MatDialog) { }
 
+  /**
+  * Called on component initialization.
+  * subscribes to the user observable.
+  */
   ngOnInit(): void {
 
     const userUpdated = (user:any):void =>{
@@ -25,6 +29,11 @@ export class ProfileViewComponent implements OnInit {
     };
     this.userService.userObservable$.subscribe(userObserver);
   }
+
+  /**
+  * Called when the update button is clicked.
+  * Opens the user update dialog.
+  */
   openUserUpdateDialog(): void {
     this.dialog.open(UserUpdateFormComponent, {
       width: '280px'

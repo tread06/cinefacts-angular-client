@@ -13,6 +13,10 @@ export class NavigationBarComponent implements OnInit {
 
   user: any= null;
 
+  /**
+  * Called on component initialization.
+  * Subscribes to the user observable.
+  */
   ngOnInit(): void {
     const userObserver = {
       next: (user: any) => this.user = user,
@@ -21,6 +25,10 @@ export class NavigationBarComponent implements OnInit {
     this.userService.userObservable$.subscribe(userObserver);
   }
 
+  /**
+  * Called when the logout button is clicked.
+  * Calls logout in the user service and navigates to the welcome screen.
+  */
   logout = () =>{
     this.userService.logout();
     this.router.navigate(['welcome']);

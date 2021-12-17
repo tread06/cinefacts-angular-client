@@ -25,6 +25,10 @@ export class MovieCardComponent {
   movies: any[] = [];
   constructor(public movieService: MovieService, private userService: UserService, private dialog: MatDialog) { }
 
+  /**
+  * Called on component initialization.
+  * Subscribes to the user observable.
+  */
   ngOnInit(): void {
     const userObserver = {
       next: (user: any) => this.onUserUpdated(user),
@@ -34,12 +38,20 @@ export class MovieCardComponent {
     this.getMovies();
   }
 
+  /**
+  * Called when the user is updated.
+  * Updates the local user and calls getMovies is the user is not null.
+  */
   onUserUpdated(user:any){
     this.user = user;
     if(this.user)
       this.getMovies();
   }
 
+  /**
+  * Populates the movie list using the movie service.
+  * Filters movies using a user filter if one was passed to the component.
+  */
   getMovies(): void {
     this.movieService.getAllMovies().subscribe((responce: any) => {
       this.movies = responce;
@@ -53,6 +65,10 @@ export class MovieCardComponent {
     });
   }
 
+  /**
+  * Called when the genre link is clicked.
+  * Open the genre dialog.
+  */
   openGenreDialog(name: string, info: string): void {
     this.dialog.open(GenreViewComponent, {
       width: '280px',
@@ -63,6 +79,10 @@ export class MovieCardComponent {
     });
   }
 
+  /**
+  * Called when the director link is clicked.
+  * Open the director dialog.
+  */
   openDirectorDialog(name: string, birth: string, death: string, bio: string): void {
     this.dialog.open(DirectorViewComponent, {
       width: '280px',
@@ -75,6 +95,10 @@ export class MovieCardComponent {
     });
   }
 
+  /**
+  * Called when the synopsis link is clicked.
+  * Open the synopsis dialog.
+  */
   openSynopsisDialog(title: string, description:string): void {
     this.dialog.open(SynopsisViewComponent, {
       width: '280px',
@@ -86,6 +110,10 @@ export class MovieCardComponent {
     });
   }
 
+  /**
+  * Called when the toggle favroite button is clicked.
+  * Adds or removes the current movie form the user's favorites using the user service.
+  */
   toggleFavorite(movieId: string): void {
 
     if(this.user.FavoriteMovies.includes(movieId)){
@@ -96,7 +124,11 @@ export class MovieCardComponent {
     }
   }
 
-  getIcon = (movieId: string):string=>{
+  /**
+  * Returns the filled icon if the movie favorited.
+  * Returns the empty icon if the movie is unfavorited.
+  */
+  getIsFavoriteIcon = (movieId: string):string=>{
     if(this.user.FavoriteMovies.includes(movieId)){
       return "favorite"
     }

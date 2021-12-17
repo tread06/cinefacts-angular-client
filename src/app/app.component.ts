@@ -7,7 +7,7 @@ import { UserService } from './fetch-api-data.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'myFlix-Angular-client';
+  title = 'cineFacts-Angular-client';
 
   constructor(private userService:UserService){}
 

@@ -17,11 +17,12 @@ export class UserRegistrationFormComponent implements OnInit {
     public dialogRef: MatDialogRef<UserRegistrationFormComponent>,
     public snackBar: MatSnackBar) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
 
-  }
-
-  //to do use non-depricated subscribe
+  /**
+  * Called when the register button is clicked.
+  * Prepares form data for registration and calls registerUser on the user service.
+  */
   registerUser(): void {
 
     //define login success

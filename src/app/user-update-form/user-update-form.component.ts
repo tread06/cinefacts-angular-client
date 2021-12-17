@@ -18,6 +18,10 @@ export class UserUpdateFormComponent implements OnInit {
     public dialogRef: MatDialogRef<UserUpdateFormComponent>,
     public snackBar: MatSnackBar) { }
 
+  /**
+  * Called on component initialization.
+  * Supscribes to the user observabe.
+  */
   ngOnInit(): void {
     const userObserver = {
       next: (user: any) => this.userDataUpdated(user),
@@ -25,12 +29,21 @@ export class UserUpdateFormComponent implements OnInit {
     };
     this.userService.userObservable$.subscribe(userObserver);
   }
+
+  /**
+  * Called when the user changes.
+  * updates the local user and form data.
+  */
   userDataUpdated(user:any){
     this.user=user;
     this.userData.Email=user.Email;
     this.userData.Birthday=user.Birthday;
   }
 
+  /**
+  * Called when the update button is pressed.
+  * prepares user form data and calls updateUser in the user service.
+  */
   updateUser(): void {
 
     //define login success
