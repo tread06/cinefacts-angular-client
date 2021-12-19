@@ -1,27 +1,41 @@
-# CinefactsAngularClient
+<br />
+<div align="center"> 
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.0.4.
+  <h3 align="center">Cinefacts Angular Frontend</h3>
 
-## Development server
+  <p align="center">
+    An Angular frontend for the CineFacts project.
+  </p>
+</div>
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+<!-- ABOUT THE PROJECT -->
+## About The Project
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Cinefacts is a MERN stack application that allows users to browse movie and user data as well as create, update, and delete user accounts with favorite movie collections. This project is the Angular frontend for the Cinefacts application.
 
-## Build
+Core concepts explored in this project:
+* Utilize Angular services for managing the user state.
+* Utilize Angular Materials for styling.
+* Utilize Angular Routing.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Built With
 
-## Running unit tests
+* [Angular](https://angular.io/)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+<!-- LICENSE -->
+## License
 
-## Running end-to-end tests
+Distributed under the MIT License.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+<!-- CONTACT -->
+## Contact
 
-## Further help
+Tanner Read - tread06@gmail.com
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Project Link: [https://github.com/tread06/cinefacts-angular-client](https://github.com/tread06/cinefacts-angular-client)
+<br />
+Website Link: [https://tread06.github.io/cinefacts-angular-client/welcome](https://tread06.github.io/cinefacts-angular-client/welcome)
+
+<!-- MARKDOWN LINKS & IMAGES -->
+[product-screenshot]: images/screenshot.png
