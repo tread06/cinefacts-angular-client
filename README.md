@@ -12,7 +12,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Cinefacts is a MERN stack application that allows users to browse movie and user data as well as create, update, and delete user accounts with favorite movie collections. This project is the Angular frontend for the Cinefacts application.
+Cinefacts is a MEAN or MERN stack application that allows users to browse movie and user data as well as create, update, and delete user accounts with favorite movie collections. This project is the Angular frontend for the Cinefacts application.
 
 Core concepts explored in this project:
 * Utilize Angular services for managing the user state.
