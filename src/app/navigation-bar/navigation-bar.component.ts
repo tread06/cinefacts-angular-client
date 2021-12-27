@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, HostListener} from '@angular/core';
 import { UserService } from '../fetch-api-data.service';
 
 @Component({
@@ -12,17 +12,24 @@ export class NavigationBarComponent implements OnInit {
   constructor(private userService : UserService, private router : Router) { }
 
   user: any= null;
+  screenWidth: any;
 
   /**
   * Called on component initialization.
   * Subscribes to the user observable.
   */
   ngOnInit(): void {
+    this.screenWidth = window.innerWidth;
     const userObserver = {
       next: (user: any) => this.user = user,
       error: (err: Error) => this.user = null,
     };
     this.userService.userObservable$.subscribe(userObserver);
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event:any) {
+    this.screenWidth = window.innerWidth;
   }
 
   /**

@@ -1,12 +1,21 @@
-<mat-toolbar class="navigation-bar">
-  <mat-icon class="nav-icon"> home </mat-icon>
-  <a *ngIf="user != null" routerLink="/welcome">Welcome to CineFacts, {{user.Username}}</a>
-  <a *ngIf="user == null" routerLink="/welcome">CineFacts</a>
-  <span class="spacer"></span>
+<div class="navigation-bar-wrapper">
+  <mat-toolbar class="navigation-bar">
+    <mat-icon class="nav-icon"> home </mat-icon>
+    <!-- <a *ngIf="user != null" routerLink="/welcome">Welcome to CineFacts, {{user.Username}}</a>
+    <a *ngIf="user == null" routerLink="/welcome">CineFacts</a> -->
+    <a routerLink="/welcome">CineFacts</a>
+    <span class="spacer"></span>
 
-  <mat-icon class="nav-icon" *ngIf="user !=null"> person_pin</mat-icon>
-  <a class="nav-item" *ngIf="user !=null" routerLink="/profile">Profile</a>
+    <a *ngIf="user !=null" routerLink="/profile">
+      <mat-icon class="nav-icon" *ngIf="user !=null"> person_pin</mat-icon>
+    </a>
+    <a class="nav-item" *ngIf="user !=null && screenWidth > 600" routerLink="/profile">Profile</a>
 
-  <mat-icon class="nav-icon" *ngIf="user !=null"> exit_to_app</mat-icon>
-  <a class="nav-item" *ngIf="user != null" role="button" (click)="logout()">Logout</a>
-</mat-toolbar>
+
+    <a *ngIf="user != null" role="button" (click)="logout()">
+      <mat-icon class="nav-icon" *ngIf="user !=null" > exit_to_app</mat-icon>
+    </a>
+    <a class="nav-item" *ngIf="user != null && screenWidth > 600" role="button" (click)="logout()">Logout</a>
+  </mat-toolbar>
+</div>
+

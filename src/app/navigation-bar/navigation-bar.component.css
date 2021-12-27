@@ -1,19 +1,30 @@
-.navigation-bar{
+.navigation-bar {
   background-color: rgb(50, 50, 53);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 100% !important;
 }
+.navigation-bar-wrapper{
+  height: 60px;
+}
+
 .spacer {
   flex: 1 1 auto;
 }
 .nav-item {
   margin-right: 20px;
   color: rgb(224, 224, 224);
-
 }
 .nav-icon {
   margin-right: 5px;
   color: rgb(224, 224, 224);
 }
-a:link{
+.nav-icon:hover {
+  color: rgb(97, 151, 231);
+}
+a:link {
   text-decoration: none;
   color: rgb(224, 224, 224);
 }

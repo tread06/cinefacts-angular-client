@@ -1,3 +1,6 @@
+.main {
+  width: 100%;
+}
 .hidden {
   font-size: 0;
   width: 1px;
